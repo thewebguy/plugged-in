@@ -51,7 +51,7 @@ mongodb.connect(mongourl, function(err, conn){
 	
 	var pull_instagram = function(){
 		instagram_timeout = setTimeout(function(){
-			var url = 'https://api.instagram.com/v1/tags/pluggedinplaylist/media/recent'
+			var url = 'https://api.instagram.com/v1/tags/pluggedinpll/media/recent'
 				+ '?client_id=193accc062384ff599748651192f236e'
 				+ '&client_secret=ec4d2e4379a0428fb70d9d1e7929aacc'
 				+ '&min_tag_id=' + min_tag_id;

@@ -115,7 +115,7 @@ mongodb.connect(mongourl, function(err, conn){
 	var x_path = 'assets/x.png';
 
 	// var stream = T.stream('statuses/filter', {track: 'twitpic,instagr,pic'});
-	var stream = T.stream('statuses/filter', {track: 'pluggedinplaylistg'});
+	var stream = T.stream('statuses/filter', {track: 'pluggedinpll'});
 		
 	stream.on('tweet', function (tweet) {
 		save_tweet(tweet);
