@@ -225,7 +225,7 @@
 	var timeout;
 	var delay = 1;
 	var default_delay = 3000;
-  var socket = io.connect('http://insta-loader.herokuapp.com');
+  var socket = io.connect('http://playlistpluggedin.herokuapp.com');
 	var username, password;
 	
 	$(function(){
@@ -240,7 +240,7 @@
 		password = readCookie("password");
 		
 		if (!password) {
-			password = prompt('Password for Insta Loader:');
+			password = prompt('Password for Playlist Plugged In:');
 			createCookie("password",password,7);
 		}
 		
@@ -328,14 +328,14 @@
 					return more_images();
 				}
 				
-				$.ajax({url: 'http://insta-loader.herokuapp.com/images/show', data: {last_id: last_id, status: status, password: password}, success: function(data){
+				$.ajax({url: 'http://playlistpluggedin.herokuapp.com/images/show', data: {last_id: last_id, status: status, password: password}, success: function(data){
 					// console.log(data);
 					
 					if (data && data.error) {
 						if (data.error == 'password') {
 							eraseCookie('password');
 							
-							password = prompt('Invalid password. Password for Insta Loader:');
+							password = prompt('Invalid password. Password for Playlist Plugged In:');
 							createCookie("password",password,7);
 							
 							more_images();
