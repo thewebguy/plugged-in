@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Images</title>
+	
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link href="css/normalize.css" rel="stylesheet" media="all" />
+	<link href="css/styles.css" rel="stylesheet" media="all" />
+	
+	<!--[if lt IE 9]>
+		<script src="js/html5shiv.js" media="all"></script>
+		<script src="js/html5shiv-printshiv.js" media="print"></script>
+	<![endif]-->
+	
+	<style>
+	body {
+		padding: 0 30px;
+	}
+	
+	.thumb {
+		float: left;
+		margin: 10px;
+		position: relative;
+		width: 100px;
+	}
+	
+	.thumb img {
+		width: 100px;
+		height: 100px;
+		background: #ccc;
+	}
+	
+	.thumb a {
+		float: left;
+	}
+	
+	#images .thumb:first-child {
+		background: #ddd;
+		padding: 5px;
+		margin: 5px 5px 4px 5px;
+		box-shadow: 0 1px 0 rgba(0,0,0,0.5);
+	}
+	
+	.thumb.reject:before {  
+	    content: "";  
+	    display: block;  
+	    position: absolute;  
+			width: 100px;
+			height: 100px;
+	    background: rgba(255,0,0, 0.40);  
+	}
+	
+	.thumb.approve:before {  
+	    content: "";  
+	    display: block;  
+	    position: absolute;  
+			width: 100px;
+			height: 100px;
+	    background: rgba(0,255,0, 0.40);  
+	}
+	
+	#tabs a {
+		display: block;
+		float: left;
+		padding: 10px;
+		border-radius: 5px 5px 0 0;
+		border-bottom: 0;
+		text-decoration: none;
+		color: #333;
+	}
+	
+	#tabs #clear {
+		position: absolute;
+		right: 22px;
+
+		padding: 10px;
+		background: #ccc;
+		border-radius: 5px;
+		box-shadow: 0 1px 0 rgba(0,0,0,0.5);
+		
+		font-size: 11px;
+		color: #333;
+		text-decoration: none;
+		text-shadow: 1px 1px 0 #fff;
+		text-align: center;
+	}
+	
+	#tabs .active {
+		font-weight: bold;
+		background: #eee;
+	}
+	
+	#images {
+		background: #eee;
+		float: left;
+		clear: both;
+		width: 85%;
+		border-radius: 0 5px 0 0;
+		min-height: 250px;
+	}
+	
+	#log-container {
+		position: absolute;
+		right: 22px;
+		top: 120px;
+		
+		width: 15%;
+		background: rgba(0,0,0,0.025);
+		box-shadow: inset 2px 0 4px -3px rgba(0,0,0,0.5);
+		border-radius: 0 5px 0 0;
+		margin-top: 10px;
+		min-height: 240px;
+	}
+	
+	#log-container h4 {
+		margin: 10px;
+		border-bottom: 1px #333 solid;
+		color: #333;
+	}
+	
+	.thumb .approve,.thumb .reject {
+		display: block;
+		float: left;
+		width: 45px;
+		padding: 10px 0 10px 5px;
+		background: #ccc;
+		border-radius: 0 5px 5px 0;
+		box-shadow: 0 1px 0 rgba(0,0,0,0.5);
+		
+		font-size: 11px;
+		color: #333;
+		text-decoration: none;
+		text-shadow: 1px 1px 0 #fff;
+		text-align: center;
+	}
+	
+	.thumb .favorite {
+		display: none;
+	}
+	
+	.approve .favorite {
+		display: block;
+		position: absolute;
+		right: 0;
+		bottom: 35px;
+		bottom: 37px;
+		background: #ccc;
+		font-size: 11px;
+		font-weight: bold;
+		text-decoration: none;
+		color: #333;
+		text-shadow: 1px 1px 0 #fff;
+		padding: 5px;
+		border-radius: 5px;
+		margin: 0 5px 5px 0;
+		box-shadow: 0 1px 0 rgba(0,0,0,0.5);
+	}
+	
+	.favorite .favorite {
+		background: rgba(50,255,50,0.75);
+	}
+
+	.approve .approve,
+	.reject .reject {
+		text-decoration: underline;
+	}
+	
+	.thumb .approve {
+		border-radius: 5px 0 0 5px;
+		width: 44px;
+	}
+	</style>
+</head>
+<body>
+
+	<header role="banner">
+		<h1><img src="logo.png" alt="#ENDITMOVEMENT" /></h1>
+		
+		<nav role="navigation">
+			<!-- This can contain your site navigation either in an unordered list or even a paragraph that contains links that allow users to navigate your site -->			
+		</nav>
+	</header>
+	
+	<div class="wrap">
+	
+		<section role="main">
+			<header>
+				<!-- <h2>Approve images</h2> -->
+				
+				<nav id="tabs">
+					<a href="#new" id="new">New</a>
+					<a href="#approve" id="approve">Approved</a>
+					<a href="#reject" id="reject">Rejected</a>
+					<a href="#favorite" id="favorite">Favorite</a>
+					<a href="#clear" id="clear">Clear Reviewed</a>
+				</nav>
+			</header>
+			
+			<article id="images">
+			</article>
+			
+			<article id="log-container">
+				<h4>My Activity</h4>
+				<div id="log">
+				</div>
+			</article>
+			
+		</section>
+		
+	</div>
+	
+	<footer role="contentinfo">
+		<small></small>
+	</footer>
+	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	
+	<script src="/socket.io/socket.io.js"></script>
+	
+	<script type="text/javascript">
+	var last_id = 0;
+	var status;
+	var timeout;
+	var delay = 1;
+	var default_delay = 3000;
+  var socket = io.connect('http://insta-loader.herokuapp.com');
+	var username, password;
+	
+	$(function(){
+		$images = $('#images');
+		$log = $('#log');
+		$tabs = $('#tabs a');
+		
+		status = location.hash.replace('#','') || 'new';
+		$tabs.removeClass('active');
+		$('#' + status).addClass('active');
+		
+		password = readCookie("password");
+		
+		if (!password) {
+			password = prompt('Password for Insta Loader:');
+			createCookie("password",password,7);
+		}
+		
+
+	  socket.on('update', function (data) {
+	    // console.log('update', data);
+			
+			if (data.status != status) {
+				var $image = $('#' + data.id, $images);
+				$image.removeClass('approve reject favorite').addClass(data.status);
+				if (data.favorite) $image.addClass('favorite');
+			}
+	    // socket.emit('my other event', { my: 'data' });
+	  });
+		
+		
+		$('body').on('keypress', function(e) {
+			switch (e.which) {
+				case 97:
+					$('.thumb:first-child .approve', $images).trigger('click');
+					break;
+					
+				case 114:
+					$('.thumb:first-child .reject', $images).trigger('click');
+					break;
+			}
+		});
+		
+		$('#tabs').on('click', 'a', function(e){
+			$this = $(this);
+			
+			if ($this.attr('id') == 'clear') {
+				e.preventDefault();
+				$('.thumb.approve,.thumb.reject', $images).remove();
+				return;
+			}
+			
+			$tabs.removeClass('active');
+			$this.addClass('active');
+			
+			change_status($this.attr('id'));
+		});
+		
+		
+		function change_status(new_status) {
+			status = new_status;
+			last_id = '';
+			
+			clearTimeout(timeout);
+			$images.html('');
+			
+			delay = 1;
+			more_images();
+		}
+		
+		function createCookie(name,value,days) {
+			if (days) {
+				var date = new Date();
+				date.setTime(date.getTime()+(days*24*60*60*1000));
+				var expires = "; expires="+date.toGMTString();
+			}
+			else var expires = "";
+			document.cookie = name+"="+value+expires+"; path=/";
+		}
+
+		function readCookie(name) {
+			var nameEQ = name + "=";
+			var ca = document.cookie.split(';');
+			for(var i=0;i < ca.length;i++) {
+				var c = ca[i];
+				while (c.charAt(0)==' ') c = c.substring(1,c.length);
+				if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+			}
+			return null;
+		}
+
+		function eraseCookie(name) {
+			createCookie(name,"",-1);
+		}
+		
+		
+		var more_images = function(){
+			timeout = setTimeout(function(){
+				if (status != "approve" && $('.thumb', $images).length > 20) {
+					return more_images();
+				}
+				
+				$.ajax({url: 'http://insta-loader.herokuapp.com/images/show', data: {last_id: last_id, status: status, password: password}, success: function(data){
+					// console.log(data);
+					
+					if (data && data.error) {
+						if (data.error == 'password') {
+							eraseCookie('password');
+							
+							password = prompt('Invalid password. Password for Insta Loader:');
+							createCookie("password",password,7);
+							
+							more_images();
+							return;
+						}
+						
+					}
+					
+					if (data && data.length) {
+						var image0 = data[0];
+						last_id = status == 'new' ? image0.timestamp : image0[image0.status + '_timestamp'];
+						
+						var buffer = '';
+						
+						for (var i in data) {
+							var image = data[i];
+							
+							buffer += '<div class="thumb ' + image.status + (image.favorite ? ' favorite' : '') +'" data-image-url="' + image.url + '" id="' + image._id + '"><a href="#" class="favorite">Fav</a>';
+							
+							// console.log(image);
+							
+							switch (image.domain.toLowerCase()) {
+								case 'twitpic.com':
+									buffer += '<img src="' + image.url.replace('twitpic.com/','twitpic.com/show/thumb/') + '" />';
+									break;
+									
+								case 'instagram.com':
+								case 'instagr.am':
+									if (image.url) buffer += '<img src="' + image.url.replace(/\/$/g,'') + '/media?s=t" />';
+									break;
+								
+								default:
+									buffer += image.url;
+									break;
+							}
+							
+							buffer += '<a href="#" class="approve">Approve</a>';
+							buffer += '<a href="#" class="reject">Reject</a>';
+							buffer += '</div>';
+						}
+						
+						if (status != 'new') {
+							$images.prepend(buffer);
+						} else {
+							$images.append(buffer);
+						}
+					}
+					
+					delay = default_delay;
+					more_images();
+				}, error: function(jqXHR, textStatus, errorThrown){
+					alert("Error: " + textStatus + "\nPlease try refreshing.");
+				}, dataType: "json"});
+			}, delay);
+		};
+		
+		more_images();
+		
+		$('#images,#log').on('click', 'a.reject,a.approve,a.favorite', function(e){
+			e.preventDefault();
+			var action = this.className;
+			var $this = $(this);
+			var $thumb = $this.parent();
+			
+			var url = $thumb.data('image-url');
+			var id = $thumb.attr('id');
+			
+			
+			var $clone = $thumb.clone();
+			
+			$log.prepend($clone);
+			$thumb.remove();
+			
+			
+			$.ajax({url: '/images/' + action, data: {url: url, id: id, password: password}, success: function(data){
+				log_action($clone, action);
+			}, dataType: "json"});
+		});
+		
+		function log_action($thumb, action) {
+			$thumb.removeClass('approve reject favorite').addClass(action);
+			if (action == 'favorite') $thumb.addClass('approve');
+			
+			var thumbs = $('.thumb', $log);
+			if (thumbs.length > 5) {
+				for (var i = 5; i < thumbs.length; i++) {
+					$(thumbs[i]).remove();
+				}
+			}
+		}
+	});
+	</script>
+	
+</body>
+</html>

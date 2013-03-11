@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    instances: 1
+    mem: 64M
+    url: ${name}.${target-base}
+    framework: 
+      info: 
+        mem: 64M
+        exec: 
+        description: Node.js Application
+      name: node
+    name: pltweets
+    services: 
+      mongodb-e24b1: 
+        type: mongodb

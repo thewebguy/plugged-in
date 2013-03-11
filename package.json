@@ -1,0 +1,22 @@
+{
+ "name": "af-node-base",
+ "version": "0.0.1-2",
+ "private": "true",
+ "readme": "Sup",
+ "dependencies": {
+  "express": "3.x",
+  "mongodb": "1.2.6",
+  "request": "2.12.0",
+  "socket.io": "0.9.13",
+  "twit": "1.0.11"
+ },
+ "engines": {
+  "node": "0.8.8",
+  "npm": "1.1.49"
+ },
+ "subdomain": "pluggedinplaylist",
+ "scripts": {
+  "predeploy": "npm install",
+  "start": "app.js"
+ }
+}
