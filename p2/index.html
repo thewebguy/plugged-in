@@ -225,7 +225,7 @@
 	var timeout;
 	var delay = 1;
 	var default_delay = 3000;
-  var socket = io.connect('http://playlistpluggedin.herokuapp.com');
+  var socket = io.connect('http://pluggedinplaylist.herokuapp.com');
 	var username, password;
 	
 	$(function(){
@@ -328,7 +328,7 @@
 					return more_images();
 				}
 				
-				$.ajax({url: 'http://playlistpluggedin.herokuapp.com/images/show', data: {last_id: last_id, status: status, password: password}, success: function(data){
+				$.ajax({url: 'http://pluggedinplaylist.herokuapp.com/images/show', data: {last_id: last_id, status: status, password: password}, success: function(data){
 					// console.log(data);
 					
 					if (data && data.error) {
