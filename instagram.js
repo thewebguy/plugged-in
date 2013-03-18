@@ -89,7 +89,7 @@ mongodb.connect(mongourl, function(err, conn){
 										
 										if (!items.length) {
 											images.insert(image_to_insert, {safe:true}, function(err, docs){
-												// console.log('Inserted!', err, docs);
+												console.log('Inserted!', err, docs);
 											});
 										}
 									});
@@ -104,7 +104,7 @@ mongodb.connect(mongourl, function(err, conn){
 			});
 			
 			pull_instagram();
-		}, 3000);
+		}, 120000);
 	}
 	
 	pull_instagram();
