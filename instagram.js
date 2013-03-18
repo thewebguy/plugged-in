@@ -99,7 +99,7 @@ mongodb.connect(mongourl, function(err, conn){
 					}
 					
 			  } else {
-			  	console.log(response.statusCode, error);
+			  	console.log(response.statusCode, body, error);
 			  }
 			});
 			
